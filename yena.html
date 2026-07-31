@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Yena — Smarter Terminal via Local AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-300">
+
+  <!-- Ambient Background Glow -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-emerald-600/10 blur-[120px] pointer-events-none rounded-full z-0"></div>
+
+  <!-- Navigation -->
+  <nav class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="font-mono font-bold text-xl bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Project Yena</span>
+      </div>
+      <div class="flex items-center space-x-6 text-sm text-slate-400 font-medium">
+        <a href="https://github.com" target="_blank" class="hover:text-slate-100 transition text-emerald-400">Source Code</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative z-10 max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 mb-8">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>Fish Shell Native • Python 3 • Powered by Ollama or LM Studio Models</span>
+    </div>
+    
+    <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight text-slate-50 mb-6">
+      Your shell, but <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">smart.</span>
+    </h1>
+    
+    <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+      Project Yena makes your linux or mac terminal smarter, by bridging the gap between natural language and complex system operations. Powered by your preferred local AI models and working seamlessly with the Fish Shell, it currently features two modules designed to assist with command generation and deep file analysis. Work in progress.
+    </p>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="relative z-10 max-w-6xl mx-auto px-6 py-12 space-y-32">
+
+    <!-- Unified Terminal Features Section -->
+    <section id="features" class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-slate-50">Core Capabilities</h2>
+        <p class="text-slate-400 mt-4 text-lg">Built from the ground up to respect your workflow, privacy, and system resources.</p>
+      </div>
+
+      <!-- Mock Terminal Window -->
+      <div class="bg-black rounded-xl overflow-hidden border border-slate-800 shadow-2xl shadow-emerald-900/10">
+        <!-- Terminal Header -->
+        <div class="bg-slate-900 px-4 py-3 flex items-center border-b border-slate-800">
+          <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+          </div>
+          <div class="mx-auto text-xs text-slate-500 font-mono">yena-features — bash</div>
+        </div>
+        <!-- Terminal Body -->
+        <div class="p-6 font-mono text-sm sm:text-base text-emerald-500 min-h-[300px] flex flex-col" id="terminal-body">
+          <div id="terminal-content" class="flex-grow"></div>
+          <div id="terminal-cursor" class="mt-2 text-emerald-500 font-bold"><span class="animate-pulse">█</span></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Module ?: Command Assistant -->
+    <section id="module-cmd" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <div class="inline-flex items-center px-3 py-1 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono font-bold text-lg">
+          Module: ?
+        </div>
+        <h2 class="text-3xl font-bold text-slate-50">AI Command Assistant</h2>
+        <p class="text-slate-400 leading-relaxed text-lg">
+          Translates your English intent into precise, single-line Fish commands. Yena formats the output with Rich for beautiful TUI rendering and prompts you to <strong>Execute</strong> or <strong>Edit</strong> the command directly using <code>gum</code>.
+        </p>
+        
+        <ul class="space-y-3 text-sm text-slate-300">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <div><strong class="text-slate-100">Deep Search (-d):</strong> Hooks into SearXNG to browse the web for up-to-date CLI documentation before generating a command.</div>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <div><strong class="text-slate-100">History Recall (-r):</strong> Analyzes your last 100 Fish history entries to provide highly contextual commands.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Module ? GIF UPLOAD SPACE -->
+      <div class="aspect-video bg-slate-900 border-2 border-dashed border-slate-700 hover:border-emerald-500/50 rounded-xl flex flex-col items-center justify-center p-6 text-center transition-colors group relative overflow-hidden">
+        
+        <!-- TODO: INSERT YOUR GIF HERE -->
+        <!-- <img src="assets/module-question.gif" alt="Module ? Demo" class="absolute inset-0 w-full h-full object-cover z-10" /> -->
+        
+        <div class="relative z-0 flex flex-col items-center opacity-60 group-hover:opacity-100 transition-opacity">
+          <svg class="w-12 h-12 text-slate-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
+          <p class="text-sm font-mono font-medium text-slate-300">Upload GIF for Module `?` Here</p>
+          <p class="text-xs text-slate-500 mt-2">16:9 Aspect Ratio Recommended</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module ??: File Helper -->
+    <section id="module-file" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <!-- Module ?? GIF UPLOAD SPACE (Left side on large screens) -->
+      <div class="order-2 lg:order-1 aspect-video bg-slate-900 border-2 border-dashed border-slate-700 hover:border-cyan-500/50 rounded-xl flex flex-col items-center justify-center p-6 text-center transition-colors group relative overflow-hidden">
+        
+        <!-- TODO: INSERT YOUR GIF HERE -->
+        <!-- <img src="assets/module-double-question.gif" alt="Module ?? Demo" class="absolute inset-0 w-full h-full object-cover z-10" /> -->
+        
+        <div class="relative z-0 flex flex-col items-center opacity-60 group-hover:opacity-100 transition-opacity">
+          <svg class="w-12 h-12 text-slate-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
+          <p class="text-sm font-mono font-medium text-slate-300">Upload GIF for Module `??` Here</p>
+          <p class="text-xs text-slate-500 mt-2">16:9 Aspect Ratio Recommended</p>
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2 space-y-6">
+        <div class="inline-flex items-center px-3 py-1 rounded border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-mono font-bold text-lg">
+          Module: ??
+        </div>
+        <h2 class="text-3xl font-bold text-slate-50">AI File Helper</h2>
+        <p class="text-slate-400 leading-relaxed text-lg">
+          Chat directly with your local files. Yena uses <code>fd</code> for fuzzy finding your target and dynamically adopts a persona—becoming an <strong>Architect</strong> for source code or a <strong>Scholar</strong> for general text files.
+        </p>
+
+        <ul class="space-y-3 text-sm text-slate-300">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-cyan-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <div><strong class="text-slate-100">Broad Extraction:</strong> Reads raw code, markdown, and natively handles document parsing via <code>pdftotext</code> and <code>pandoc</code> (for EPUB/DOCX).</div>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-cyan-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <div><strong class="text-slate-100">Built-in Subcommands:</strong> Use <code>sum</code> for instant bulleted summaries or <code>meta</code> to reveal rich file stat metadata (permissions, octal codes, ownership).</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="pt-16 border-t border-slate-800/80">
+      <div class="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-bold text-slate-50 mb-6 text-center">Unified Installation</h2>
+        <p class="text-slate-400 text-center mb-8 text-sm">
+          Yena is designed for a seamless setup. The installer script automatically provisions a Python virtual environment, installs dependencies, and creates symbolic links to your Fish config directory.
+        </p>
+        
+        <div class="bg-slate-950 border border-slate-800 rounded-lg p-5 font-mono text-sm overflow-x-auto shadow-inner">
+          <div class="flex flex-col space-y-2 text-slate-300">
+            <span class="text-slate-500"># 1. Clone the repository</span>
+            <span><span class="text-emerald-400">git</span> clone https://github.com/your-username/project-yena.git</span>
+            <span><span class="text-emerald-400">cd</span> project-yena</span>
+            <br>
+            <span class="text-slate-500"># 2. Run the unified installer</span>
+            <span><span class="text-emerald-400">./install_yena.fish</span></span>
+            <br>
+            <span class="text-slate-500"># 3. Reload your shell</span>
+            <span><span class="text-emerald-400">exec</span> fish</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-24 border-t border-slate-800/80 py-10 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+      <p>&copy; 2026 Project Yena - AI Ready Terminal</p>
+      <div class="mt-4 sm:mt-0 flex space-x-6">
+        <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span> Local Inference</span>
+        <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-cyan-500 mr-2"></span> Fish Shell Only</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Terminal Typing Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Define the lines to print in the mock terminal. 
+      // You can edit the text of these mock points directly here.
+      const terminalLines = [
+        { text: "$ ./yena --show-features", type: "cmd", delay: 600 },
+        { text: "Loading core capabilities...", type: "sys", delay: 400 },
+        { text: "✔ 100% local execution ensures your code never leaves your machine.", type: "feature", delay: 300 },
+        { text: "✔ No API keys required, no hidden telemetry, and no cloud subscriptions.", type: "feature", delay: 300 },
+        { text: "✔ Terminal-native architecture meaning zero context switching.", type: "feature", delay: 300 },
+        { text: "✔ Streamed responses give actionable output milliseconds after hitting enter.", type: "feature", delay: 300 },
+        { text: "✔ Bring your own model backend, fully compatible with Ollama and LM Studio.", type: "feature", delay: 300 },
+        { text: "✔ Configurable prompts allow you to tune AI personalities to your liking.", type: "feature", delay: 300 },
+        { text: "$ ", type: "prompt", delay: 0 }
+      ];
+
+      const terminalContent = document.getElementById("terminal-content");
+      const cursor = document.getElementById("terminal-cursor");
+      let currentLineIndex = 0;
+      let hasRun = false;
+
+      function typeLine(lineObj, callback) {
+        const lineElem = document.createElement("div");
+        lineElem.className = "mb-2 leading-relaxed";
+        
+        // Apply different styling based on line type
+        if (lineObj.type === "sys") {
+          lineElem.className += " text-slate-400";
+        } else if (lineObj.type === "cmd") {
+          lineElem.className += " font-bold text-emerald-400";
+        } else if (lineObj.type === "prompt") {
+          lineElem.className += " font-bold text-emerald-400 inline-block";
+        } else if (lineObj.type === "feature") {
+          lineElem.className += " pl-2 border-l border-emerald-900";
+        }
+
+        terminalContent.appendChild(lineElem);
+
+        // If it's a command, type it out character by character
+        if (lineObj.type === "cmd") {
+          let charIndex = 0;
+          function typeChar() {
+            if (charIndex < lineObj.text.length) {
+              lineElem.textContent += lineObj.text.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeChar, 40); // typing speed
+            } else {
+              setTimeout(callback, lineObj.delay);
+            }
+          }
+          typeChar();
+        } else {
+          // If it's a feature or system line, print it instantly to simulate stdout
+          lineElem.textContent = lineObj.text;
+          setTimeout(callback, lineObj.delay);
+        }
+      }
+
+      function runTerminalSequence() {
+        if (currentLineIndex < terminalLines.length) {
+          typeLine(terminalLines[currentLineIndex], () => {
+            currentLineIndex++;
+            runTerminalSequence();
+          });
+        } else {
+          // When finished, attach the cursor next to the final prompt
+          const lastPrompt = terminalContent.lastElementChild;
+          lastPrompt.appendChild(cursor);
+          cursor.className = "inline-block ml-1 animate-pulse font-bold";
+        }
+      }
+
+      // Use IntersectionObserver to start animation only when terminal is in view
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !hasRun) {
+          hasRun = true;
+          setTimeout(runTerminalSequence, 500); // Wait half a second after scrolling to start
+        }
+      }, { threshold: 0.5 });
+
+      observer.observe(document.getElementById("features"));
+    });
+  </script>
+</body>
+</html>
